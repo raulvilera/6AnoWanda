@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade de Ciências - 6º Ano</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #d0d0d0;
+            padding: 20px;
+            min-height: 100vh;
+            background-image: linear-gradient(145deg, #c0c0c0, #e0e0e0);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background-color: #d0d0d0;
+            z-index: 1;
+            border-radius: 20px;
+            box-shadow: inset 5px 5px 10px #b3b3b3,
+                        inset -5px -5px 10px #ededed;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(145deg, #e6f2ff, #cce5ff);
+            border-radius: 12px;
+            box-shadow: 8px 8px 16px #b3b3b3,
+                        -8px -8px 16px #ffffff;
+            position: relative;
+            z-index: 2;
+            border: 1px solid #b8d4f0;
+        }
+
+        .school-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #004085;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .student-info {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+
+        .info-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .name-group {
+            grid-column: 1 / 2;
+        }
+
+        @media (max-width: 768px) {
+            .name-group { grid-column: 1 / 2; }
+        }
+
+        .info-label {
+            margin-right: 5px;
+            font-weight: bold;
+            color: #004085;
+            white-space: nowrap;
+        }
+
+        .info-field {
+            padding: 8px;
+            border: 1px solid #a0c4e0;
+            border-radius: 4px;
+            background-color: #f8fbff;
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 100%;
+        }
+
+        .activity-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+            color: #004085;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .question-container {
+            padding: 25px;
+            margin-bottom: 30px;
+            background: linear-gradient(145deg, #e6f2ff, #cce5ff);
+            border-radius: 12px;
+            box-shadow: 8px 8px 16px #b3b3b3,
+                        -8px -8px 16px #ffffff;
+            position: relative;
+            z-index: 2;
+            border: 1px solid #b8d4f0;
+        }
+
+        .question {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #004085;
+            line-height: 1.5;
+        }
+
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.2);
+            border: 1px solid #a0c4e0;
+            display: block;
+        }
+
+        .options { margin-top: 15px; }
+
+        .option {
+            margin-bottom: 10px;
+            padding: 12px;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 8px;
+            border: 1px solid #d0d0d0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.1),
+                        -4px -4px 8px rgba(255,255,255,0.7);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option:hover {
+            background: linear-gradient(145deg, #f5f5f5, #e8e8e8);
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.15),
+                        -6px -6px 12px rgba(255,255,255,0.8);
+        }
+
+        .option.selected {
+            background: linear-gradient(145deg, #155724, #0f4019);
+            border-color: #0f4019;
+            color: white;
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.3),
+                        4px 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .option::before {
+            content: attr(data-letter) ".";
+            font-weight: bold;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+            gap: 15px;
+        }
+
+        @media (max-width: 480px) {
+            .buttons { flex-direction: column; }
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.2),
+                        -6px -6px 12px rgba(255,255,255,0.7);
+            flex: 1;
+        }
+
+        #submitBtn {
+            background: linear-gradient(145deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        #submitBtn:hover {
+            background: linear-gradient(145deg, #0056b3, #004085);
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 16px rgba(0,0,0,0.25),
+                        -8px -8px 16px rgba(255,255,255,0.7);
+        }
+
+        #submitBtn:active {
+            transform: translateY(1px);
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        #submitBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #clearBtn {
+            background: linear-gradient(145deg, #6c757d, #545b62);
+            color: white;
+        }
+
+        #clearBtn:hover {
+            background: linear-gradient(145deg, #545b62, #3d4348);
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 16px rgba(0,0,0,0.25),
+                        -8px -8px 16px rgba(255,255,255,0.7);
+        }
+
+        #clearBtn:active {
+            transform: translateY(1px);
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .success {
+            background: linear-gradient(145deg, #d4edda, #c3e6cb);
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .error {
+            background: linear-gradient(145deg, #f8d7da, #f5c6cb);
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="school-name">E.E. PROFª WANDA MASCAGNI DE SÁ</div>
+        <div class="student-info">
+            <div class="info-group name-group">
+                <span class="info-label">NOME:</span>
+                <select id="studentName" class="info-field">
+                    <option value="">Selecione seu nome</option>
+                </select>
+            </div>
+            <div class="info-group">
+                <span class="info-label">Nº:</span>
+                <input type="text" id="studentNumber" class="info-field" readonly>
+            </div>
+            <div class="info-group">
+                <span class="info-label">SÉRIE:</span>
+                <input type="text" id="studentGrade" class="info-field" readonly>
+            </div>
+            <div class="info-group">
+                <span class="info-label">DATA:</span>
+                <input type="text" id="currentDate" class="info-field" readonly>
+            </div>
+        </div>
+        <div class="activity-title">ATIVIDADE DE CIÊNCIAS – 6º ANO (AULAS 1 A 8)</div>
+    </div>
+
+    <div id="questionsContainer"></div>
+
+    <div class="buttons">
+        <button id="submitBtn">Enviar Respostas</button>
+        <button id="clearBtn">Limpar Respostas</button>
+    </div>
+
+    <div id="resultMessage" class="result"></div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÕES
+   ============================================================ */
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/SEU_APPS_SCRIPT_URL_AQUI/exec";
+// SUBSTITUA pela URL do seu Apps Script vinculado à planilha 12uVqpzcAhkHWWNL6eC1R5lEFVnvJhm4C3e4gPBQ5dF0
+
+/* ============================================================
+   ALUNOS – 6º ANO B e 6º ANO C
+   ============================================================ */
+const students = {
+    "6º Ano B": [
+        { number: "1",  name: "ANA CLARA CORREA PINTO" },
+        { number: "2",  name: "ELIZA RUYZ DE OLIVEIRA" },
+        { number: "3",  name: "JOAO PIETRO ROCHA OLIVEIRA" },
+        { number: "4",  name: "MANUELLA GONCALVES DA SILVA" },
+        { number: "5",  name: "MARIA EDUARDA ARAUJO GARRIDO" },
+        { number: "6",  name: "UELITON VIEIRA DA SILVA" },
+        { number: "7",  name: "VALENTINA DOS SANTOS CORREA" },
+        { number: "8",  name: "CATARYNA DOS SANTOS" },
+        { number: "9",  name: "EDUARDO ANTONIO LAMBERT GONCALVES" },
+        { number: "13", name: "DIEGO GABRIEL ALEIXO GOMES" },
+        { number: "14", name: "BRUNO GABRIEL GONÇALVES ROCHA" },
+        { number: "15", name: "LORENNA ANDRADE DE OLIVEIRA" },
+        { number: "16", name: "RAISSA MATHIAS ANDRADE" },
+        { number: "17", name: "MARIA EDUARDA SOUSA BARBOZA" },
+        { number: "19", name: "FERNANDA MEDEIROS FANTINI" }
+    ],
+    "6º Ano C": [
+        { number: "1",  name: "VITOR HUGO BRAZ GOMES" },
+        { number: "3",  name: "ALICE DA SILVA VIEIRA" },
+        { number: "4",  name: "HELOISA NEVES DA SILVA" },
+        { number: "7",  name: "ROSA MARIA OLIVEIRA ALMEIDA" },
+        { number: "8",  name: "EMILY COSTA PEREIRA" },
+        { number: "9",  name: "ANA LETÍCIA MARTINS DA SILVA" },
+        { number: "10", name: "ISABELA SEVERA RAULINO" },
+        { number: "12", name: "JOAO VITOR BARBOSA PONTES" },
+        { number: "13", name: "TALITA VITORIA VIEIRA NUNES" },
+        { number: "14", name: "MATHEUS DUARTE DA SILVA" },
+        { number: "15", name: "VICTOR EDUARDO DOS SANTOS" },
+        { number: "16", name: "FELIPE BARROS DE FREITAS" },
+        { number: "17", name: "ARTHUR DEIVID DA SILVA FARIAS" },
+        { number: "18", name: "CLARA JAZMIN URDAPILLETA GONZALEZ" },
+        { number: "19", name: "SARAH LIVIA NUNES NASCIMENTO" },
+        { number: "20", name: "AGATHA RODRIGUES MIRANDA" },
+        { number: "21", name: "LAURAH APARECIDA CANDIDO DE OLIVEIRA" }
+    ]
+};
+
+/* ============================================================
+   QUESTÕES – AULAS 1 A 8
+   Temas: Ciência, Terra, Estrutura interna, Esferas,
+          Rotação/Translação, Estações do ano,
+          Sistema Sol-Terra-Lua / Fases da Lua / Eclipses
+   ============================================================ */
+const questions = [
+    /* ── AULA 1 – Introdução às Ciências da Terra / Método científico ── */
+    {
+        id: 1,
+        question: "Durante uma aula sobre método científico, a professora pediu que os alunos observassem plantas dentro e fora da sala. Após a observação, eles levantaram hipóteses e realizaram um experimento para testá-las. Esse conjunto de etapas – observação, hipótese, experimento e conclusão – é chamado de método científico. Considerando o papel da ciência no nosso cotidiano, qual alternativa explica corretamente por que a observação é a primeira etapa desse processo?",
+        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQzA2oJg6VJp0UDpA7sNaJt1dEjI8v3mHiGjPXdEXh-7xBBX_bdAGH0HcEpRnCZ8QkqdPBh01BjSJ5TSnbNR5wkJR5OI1K4R7Nl7u3RG1PbLSVBibhVqoB0YMKV9_PLqpVfvQz4K_TMKzOAopY6r2PGW4Ds1JJqb5xTOHhWbf9VWID7LfpITgJiuSQd5/s450/metodo_cientifico.png",
+        options: [
+            { text: "Porque a observação cria fatos novos na natureza que depois são estudados pelos cientistas.", correct: false },
+            { text: "Porque a observação permite identificar um fenômeno ou problema no mundo real, que servirá de ponto de partida para a investigação científica.", correct: true },
+            { text: "Porque observar substitui a necessidade de realizar experimentos, poupando tempo e recursos.", correct: false },
+            { text: "Porque sem observação os cientistas só conseguem estudar fenômenos já explicados anteriormente.", correct: false }
+        ]
+    },
+
+    /* ── AULA 2 – O planeta Terra: características gerais e formação ── */
+    {
+        id: 2,
+        question: "A Terra é o terceiro planeta do Sistema Solar e o único conhecido a abrigar vida. Ela tem formato aproximadamente esférico, levemente achatado nos polos – chamado de geoide. Possui água líquida em abundância, atmosfera rica em oxigênio e temperatura média adequada para os seres vivos. Considerando essas características, qual alternativa apresenta corretamente uma condição fundamental que torna a Terra habitável?",
+        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjMgAkLs6X6E2pRp01YGCFpA6qlxVBhQOkjBhLjU37LZEOHilM7tJNlr0p9jRdP3FX8Qk8WC9xvHE2MZLT0yYMjXn2tUxr8p-gDVr2NWAMhENDJbkOT5NdWLvnluLvY65BDz-c4MLFGB1J-wd7FVVUovpIHleFagSEqJPAKM1rRmqD78q1D-8c-s97A0Z/s450/planeta_terra.png",
+        options: [
+            { text: "A Terra é habitável por ser o maior planeta do Sistema Solar, o que garante a manutenção de sua atmosfera.", correct: false },
+            { text: "A distância da Terra ao Sol permite que a água exista nos três estados físicos, com predomínio do estado líquido, essencial para a vida.", correct: true },
+            { text: "A Terra é habitável porque não possui vulcões ou terremotos, mantendo estabilidade geológica permanente.", correct: false },
+            { text: "A presença de dois satélites naturais garante o equilíbrio gravitacional necessário para a existência de vida.", correct: false }
+        ]
+    },
+
+    /* ── AULA 3 – Estrutura interna da Terra ── */
+    {
+        id: 3,
+        question: "A Terra é formada por camadas internas com características muito diferentes entre si. A camada mais externa, onde vivemos, é a crosta; abaixo dela encontra-se o manto, composto por rocha parcialmente fundida; e no centro está o núcleo, dividido em externo (líquido) e interno (sólido). Considerando esse modelo, qual alternativa descreve corretamente as camadas internas da Terra em ordem da mais externa para a mais interna?",
+        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhFaqXoG7X8ywEIlFpYkm_Gzr9wS9hO5p_TqgBvfz7V-bHhyMIXW7M4dYTp_fEYe7EI7IrRBXrJoE4lSHjNO7OvZi52cg0H1dKKy4C7mvReMjpuUTMU89L_kF5SFqhfkXKXY0z1YU3Kfx6FjcNVXzWqovn_LbYh3DaZ7vvJx11FyBqMXjMjE-bZfSM2GW/s450/estrutura_terra.png",
+        options: [
+            { text: "Núcleo → Manto → Crosta, sendo o núcleo a camada mais fria e a crosta a mais quente.", correct: false },
+            { text: "Crosta → Manto → Núcleo externo → Núcleo interno, com temperatura e pressão aumentando em direção ao centro.", correct: true },
+            { text: "Crosta → Núcleo → Manto, pois o manto fica na camada mais profunda do planeta.", correct: false },
+            { text: "Manto → Crosta → Núcleo, sendo o manto a camada superficial onde ocorrem os terremotos.", correct: false }
+        ]
+    },
+
+    /* ── AULA 4 – Esferas da Terra ── */
+    {
+        id: 4,
+        question: "Para estudar o planeta Terra de forma organizada, os cientistas a dividem em quatro grandes esferas: a litosfera (parte sólida), a hidrosfera (parte líquida), a atmosfera (camada de gases) e a biosfera (conjunto de todos os seres vivos). Essas esferas interagem constantemente entre si. Considere a situação: uma chuva cai sobre uma floresta, infiltra-se no solo e é absorvida pelas raízes das árvores. Essa situação envolve a interação de quais esferas?",
+        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvPLtVQO4B0gIyxZ0P2OkqZy7Qv9wl7d8nqw4WV0tq2rOhpAj_RXHt5w7KIY4u_0xPvHiXb8P23n7jcXGOXWr-6KSA4hb7UerK5F1HWlYHqsmk6FW8X9A5vD3e_i3xPFLIDZh3H8DaOa4B-M7K3DKKqj2ZPwT5OWPAiXWIJiXHcMYn0qXoFH5bJGApo/s450/esferas_terra.png",
+        options: [
+            { text: "Apenas a hidrosfera e a litosfera, pois apenas a água e o solo estão envolvidos.", correct: false },
+            { text: "Apenas a atmosfera e a biosfera, pois a chuva vem das nuvens e a floresta é formada por seres vivos.", correct: false },
+            { text: "Atmosfera, hidrosfera, litosfera e biosfera, pois a chuva (atmosfera/hidrosfera) cai sobre o solo (litosfera) e é absorvida pelas árvores (biosfera).", correct: true },
+            { text: "Apenas a litosfera e a biosfera, pois o solo e as plantas não dependem da água para interagir.", correct: false }
+        ]
+    },
+
+    /* ── AULA 5 – Movimentos da Terra: Rotação ── */
+    {
+        id: 5,
+        question: "A Terra realiza dois movimentos principais: a rotação e a translação. A rotação ocorre em torno do próprio eixo da Terra, com duração de aproximadamente 24 horas, gerando o ciclo do dia e da noite. Durante a rotação, a metade voltada para o Sol recebe luz (dia) enquanto a outra permanece na sombra (noite). Considerando esse fenômeno, qual alternativa explica corretamente a causa do dia e da noite na Terra?",
+        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjxqT0VxKjkHhW1aZpYXXIAhG3IhLk4l0x6FQaGXU7sUhfxoYC8sQZCvEXh5EM3B4xUgIPPV-m6LE2lXlW55EeCM2L2q7k2KkQblbKQjH2_nUuKAuRQ4ZLiN0IVnzxHT5cDPLUJT8fJqDCwQZFVEe5KiyT8xDJ4VWrJmTRJK1N7J4_S7X7D7e2-pVjrA/s450/rotacao_terra.png",
+        options: [
+            { text: "O dia e a noite são causados pelo movimento de translação da Terra ao redor do Sol, que leva 24 horas.", correct: false },
+            { text: "O dia e a noite ocorrem porque o Sol gira ao redor da Terra, iluminando diferentes partes a cada período.", correct: false },
+            { text: "O dia e a noite são causados pelo movimento de rotação da Terra em torno do seu próprio eixo, fazendo com que cada parte seja iluminada pelo Sol por um período e permaneça na sombra por outro.", correct: true },
+            { text: "O dia e a noite são causados pela inclinação do eixo terrestre, que faz com que algumas regiões nunca recebam luz solar.", correct: false }
+        ]
+    },
+
+    /* ── AULA 6 – Translação e Estações do Ano ── */
+    {
+        id: 6,
+        question: "A Terra leva aproximadamente 365 dias e 6 horas para dar uma volta completa ao redor do Sol – esse movimento é chamado de translação. Combinado com a inclinação de aproximadamente 23,5° do eixo terrestre, a translação é responsável pelas quatro estações do ano (verão, outono, inverno e primavera). Considerando esse fenômeno, qual alternativa explica corretamente a causa das estações do ano?",
+        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhD5xXdSaHKVGPO4LxrCX5MJMtVqSqRNcBLuZ-0M7dEumcFmIhV85iO8HYYi1MBkSlzL5gExjH5sCNXhtFLFgPjVXk0jmcFjUBDAaqnYx5U8AKJLpnvTuulOFd2g4Uk6kYXfKovLXj3v0x6dEDtX_gZnOcl5WvFPnAtl6RlEjYP-bnFfUZYEDfqGYiFPl/s450/estacoes_ano.png",
+        options: [
+            { text: "As estações do ano ocorrem porque a distância entre a Terra e o Sol muda ao longo do ano, sendo maior no inverno e menor no verão.", correct: false },
+            { text: "As estações do ano são causadas pela combinação da translação da Terra ao redor do Sol com a inclinação de seu eixo, o que faz com que cada hemisfério receba mais ou menos energia solar em diferentes épocas do ano.", correct: true },
+            { text: "As estações do ano ocorrem porque a Terra para de se mover em determinados períodos, aproximando-se e se afastando do Sol.", correct: false },
+            { text: "As estações do ano são causadas apenas pela rotação da Terra, que distribui o calor de forma diferente nas regiões tropicais e polares.", correct: false }
+        ]
+    },
+
+    /* ── AULA 7 – Sistema Sol–Terra–Lua / Fases da Lua ── */
+    {
+        id: 7,
+        question: "A Lua é o único satélite natural da Terra. Ela orbita a Terra em cerca de 29,5 dias, e durante esse período apresenta diferentes fases: Lua Nova, Quarto Crescente, Lua Cheia e Quarto Minguante. Essas fases ocorrem conforme a posição relativa entre o Sol, a Terra e a Lua muda, alterando a parte iluminada da Lua visível da Terra. Considerando esse sistema, qual alternativa descreve corretamente o motivo pelo qual observamos diferentes fases da Lua?",
+        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyBqXvU4LLvv0Q3kKfkFTiWo0H0w1QLbdC0aMr3PMX-Ow9O1d_8-YVkD4CZEjWjjnrENTM7HjfB16JAtbETz4GK9C9qXbx6GcVoqPQI7O4y2mFfqrMK4vOlRByaZwdLQLGW3mAg9n0-jxBLKp_RLiYMKxXhRXGd7TS9S1x5MOgdFqK3K1fZbQz6DvGCZ/s450/fases_lua.png",
+        options: [
+            { text: "As fases da Lua ocorrem porque a Lua produz sua própria luz, acendendo e apagando em diferentes momentos do mês.", correct: false },
+            { text: "As fases da Lua são causadas pela sombra da Terra que cobre progressivamente a superfície lunar ao longo do mês.", correct: false },
+            { text: "As fases da Lua ocorrem porque, à medida que a Lua orbita a Terra, a porção iluminada pelo Sol visível da Terra muda, criando as diferentes aparências que chamamos de fases.", correct: true },
+            { text: "As fases da Lua são causadas pela rotação da Lua em torno do seu próprio eixo, que esconde partes da sua superfície ao longo do mês.", correct: false }
+        ]
+    },
+
+    /* ── AULA 8 – Eclipses ── */
+    {
+        id: 8,
+        question: "Os eclipses são fenômenos astronômicos que ocorrem quando o Sol, a Terra e a Lua se alinham. No eclipse solar, a Lua se posiciona entre a Terra e o Sol, bloqueando a luz solar para uma região da Terra. Já no eclipse lunar, a Terra se posiciona entre o Sol e a Lua, projetando sua sombra sobre a Lua. Considerando esses fenômenos, qual alternativa apresenta corretamente a diferença entre eclipse solar e eclipse lunar?",
+        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgP6G-bHbQbNn3e-TFhx9RG5GEW_kFt0R8_Lk2Bz0ckrfFd5kLnfR2JqAdHa9Rcy0k5rP5MYiRq6bQ0LdecBkjovMIAuAX0OjqP4K4YhPT4T4R3Yx4HbM8d6JoWEJL5Y7CzR2cNn2T_mXGa4iqO3iJvTkuF3ZKVQi0d5AMIWYlKmBgE_s1rqj2UBp7/s450/eclipses.png",
+        options: [
+            { text: "No eclipse solar a sombra da Terra cobre a Lua, e no eclipse lunar a sombra da Lua cobre o Sol.", correct: false },
+            { text: "No eclipse solar a Lua bloqueia a luz do Sol para uma parte da Terra; no eclipse lunar a Terra projeta sua sombra sobre a Lua, escurecendo-a.", correct: true },
+            { text: "Ambos os tipos de eclipse ocorrem apenas durante a fase de Lua Nova, pois é quando o alinhamento é sempre perfeito.", correct: false },
+            { text: "O eclipse solar pode ser observado por qualquer pessoa no mundo inteiro ao mesmo tempo, enquanto o eclipse lunar é visível apenas no hemisfério norte.", correct: false }
+        ]
+    }
+];
+
+/* ============================================================
+   MAPEAMENTO DAS RESPOSTAS CORRETAS
+   ============================================================ */
+const correctAnswersMap = {};
+questions.forEach(q => {
+    q.options.forEach((opt, idx) => {
+        if (opt.correct) correctAnswersMap[`q${q.id}`] = String.fromCharCode(65 + idx);
+    });
+});
+
+/* ============================================================
+   EXIBIÇÃO DE MENSAGENS
+   ============================================================ */
+function showResult(msg, type) {
+    const el = document.getElementById("resultMessage");
+    el.innerHTML = msg;
+    el.className = "result " + type;
+    el.style.display = "block";
+    el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function hideResult() {
+    document.getElementById("resultMessage").style.display = "none";
+}
+
+/* ============================================================
+   ENVIO PARA O APPS SCRIPT
+   ============================================================ */
+async function sendToGoogle(dataObj) {
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(dataObj)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
+        }
+
+        const json = await response.json();
+
+        if (json.status === "success") {
+            showResult("<strong>✅ Sucesso!</strong> Suas respostas foram registradas com sucesso!", "success");
+            document.getElementById("submitBtn").disabled = true;
+        } else {
+            showResult(
+                "<strong>❌ Erro no servidor:</strong> " + (json.message || "Resposta inesperada do Apps Script."),
+                "error"
+            );
+        }
+    } catch (e) {
+        showResult(
+            "<strong>❌ Erro de Conexão:</strong> " + e.message + ". Verifique se o Apps Script está publicado corretamente.",
+            "error"
+        );
+    }
+}
+
+/* ============================================================
+   INICIALIZAÇÃO
+   ============================================================ */
+document.addEventListener("DOMContentLoaded", () => {
+    const select = document.getElementById("studentName");
+    const numField = document.getElementById("studentNumber");
+    const gradeField = document.getElementById("studentGrade");
+    const container = document.getElementById("questionsContainer");
+    const dateField = document.getElementById("currentDate");
+
+    // Data atual
+    dateField.value = new Date().toLocaleDateString('pt-BR');
+
+    // Popular lista de alunos
+    Object.keys(students).forEach(turma => {
+        const group = document.createElement("optgroup");
+        group.label = turma;
+        students[turma].forEach(s => {
+            const opt = document.createElement("option");
+            opt.value = `${s.number}|${turma}|${s.name}`;
+            opt.textContent = s.name;
+            group.appendChild(opt);
+        });
+        select.appendChild(group);
+    });
+
+    // Popular questões
+    questions.forEach(q => {
+        const block = document.createElement("div");
+        block.className = "question-container";
+        block.id = "q" + q.id;
+
+        // Monta HTML da questão
+        let imgHTML = "";
+        if (q.image) {
+            imgHTML = `<img src="${q.image}" class="question-image" alt="Imagem da questão ${q.id}" onerror="this.style.display='none'">`;
+        }
+
+        block.innerHTML = `
+            <p class="question"><strong>${q.id}.</strong> ${q.question}</p>
+            ${imgHTML}
+            <div class="options"></div>
+        `;
+
+        const optBox = block.querySelector(".options");
+        q.options.forEach((opt, idx) => {
+            const letter = String.fromCharCode(65 + idx);
+            const div = document.createElement("div");
+            div.className = "option";
+            div.dataset.question = q.id;
+            div.dataset.letter = letter;
+            div.textContent = opt.text;
+
+            div.onclick = () => {
+                optBox.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+                div.classList.add("selected");
+                hideResult();
+            };
+
+            optBox.appendChild(div);
+        });
+
+        container.appendChild(block);
+    });
+
+    // Mudança de aluno no select
+    select.onchange = () => {
+        if (!select.value) {
+            numField.value = "";
+            gradeField.value = "";
+            return;
+        }
+        const [n, g] = select.value.split("|");
+        numField.value = n;
+        gradeField.value = g;
+        hideResult();
+    };
+
+    // Botão limpar
+    document.getElementById("clearBtn").onclick = () => {
+        document.querySelectorAll(".option.selected").forEach(opt => opt.classList.remove("selected"));
+        hideResult();
+    };
+});
+
+/* ============================================================
+   ENVIO FINAL
+   ============================================================ */
+document.getElementById("submitBtn").onclick = async () => {
+    hideResult();
+
+    const select = document.getElementById("studentName");
+    if (!select.value) {
+        showResult("⚠️ Selecione seu nome antes de enviar.", "error");
+        return;
+    }
+
+    const [studentNumber, studentGrade, studentName] = select.value.split("|");
+    const data = { studentName, studentNumber, studentGrade };
+
+    let correct = 0;
+    let allAnswered = true;
+    const totalQuestions = questions.length;
+
+    for (let q of questions) {
+        const selected = document.querySelector(`#q${q.id} .option.selected`);
+        if (!selected) {
+            allAnswered = false;
+            document.getElementById(`q${q.id}`).scrollIntoView({ behavior: "smooth", block: "center" });
+            break;
+        }
+        const letter = selected.dataset.letter;
+        data[`q${q.id}`] = letter;
+        if (letter === correctAnswersMap[`q${q.id}`]) correct++;
+    }
+
+    if (!allAnswered) {
+        showResult("⚠️ Responda todas as questões antes de enviar.", "error");
+        return;
+    }
+
+    data.finalScore = correct;
+    data.percentage = (correct / totalQuestions) * 100;
+
+    showResult(`⏳ Calculando nota... você acertou <strong>${correct}/${totalQuestions}</strong>. Enviando dados...`, "success");
+
+    await sendToGoogle(data);
+};
+</script>
+</body>
+</html>
